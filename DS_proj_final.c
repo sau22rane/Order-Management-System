@@ -4,7 +4,6 @@
 
 int num_items, total=0;
 int a[10][2];
-int *p = (int*)malloc(sizeOf(int));
 
 void makedb ();
 void display_menu();
@@ -16,6 +15,7 @@ void add_queue();
 int main()
 {
     int s, item, n, i =0, control;
+    int *p= (int*) malloc(sizeof(int));
 
     makedb();
     

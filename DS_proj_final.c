@@ -1,14 +1,17 @@
 #include<stdio.h>
 #include<math.h>
+#include<stdlib.h>
 
 int num_items, total=0;
 int a[10][2];
+int *p = (int*)malloc(sizeOf(int));
 
 void makedb ();
 void display_menu();
 void addtally(int item);
 void addtotal();
 void editmenu();
+void add_queue();
 
 int main()
 {
@@ -136,4 +139,9 @@ void addtotal()  // function to add the total of the day to a file
     
     printf("Tally for the Day %d\n",total);
     printf("Today's tally was successfully saved to database\n");
+}
+
+void add_queue()
+{
+
 }

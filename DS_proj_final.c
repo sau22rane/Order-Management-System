@@ -4,18 +4,19 @@
 
 int num_items, total=0;
 int a[10][2];
+int pend=0;
 
 void makedb ();
 void display_menu();
 void addtally(int item);
 void addtotal();
 void editmenu();
-void add_queue();
+void delete_queue(int*);
 
 int main()
 {
     int s, item, n, i =0, control;
-    int *p= (int*) malloc(sizeof(int));
+    int *queue= (int*) malloc(sizeof(int));
 
     makedb();
     
@@ -46,7 +47,9 @@ int main()
 
                     break;
 
-            case 3: break;
+            case 3:
+            		delete_queue(queue);
+            		break;
 
             case 4: addtotal();  
                     return 0;              
@@ -141,7 +144,18 @@ void addtotal()  // function to add the total of the day to a file
     printf("Today's tally was successfully saved to database\n");
 }
 
-void add_queue()
-{
 
+void delete_queue(int *start)
+{
+	int temp;
+	pend--;
+	if(pend==1){
+		*(start+pend)=0;
+	}
+	else{
+		for(int i=0;i<pend;i++){
+			*(start+i)=*(start+i+1);
+		}
+		*(start+pend)=0;
+	}
 }

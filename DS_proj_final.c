@@ -13,11 +13,9 @@ void display_menu();
 void addtally(int item);
 void addtotal();
 void editmenu();
-
 void add_queue(int *queue, int item);
 void display_queue(int *queue);
 void delete_queue(int *queue);
-void delete_queue(int*);
 
 int main()
 {
@@ -55,10 +53,8 @@ int main()
                     printf("\n");
                     break;
 
-   
-            case 3:
-            		delete_queue(queue);
-            		break;
+            case 3: delete_queue(queue);
+                    break;
 
             case 4: display_queue(queue);
                     break;
@@ -199,3 +195,5 @@ void delete_queue(int *start)
         pend = 0;
         printf ("No pending items to be deleted \n");
     }       
+
+}

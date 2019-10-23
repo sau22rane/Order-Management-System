@@ -1,17 +1,21 @@
 #include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
+#include<string.h>
 
 int num_items, total=0;
 int a[10][2];
-int pend=0;
+int pend = 0;
+char dishes[10][50];
 
 void makedb ();
 void display_menu();
 void addtally(int item);
 void addtotal();
 void editmenu();
-void delete_queue(int*);
+void add_queue(int *queue, int item);
+void display_queue(int *queue);
+void delete_queue(int *queue);
 
 int main()
 {
@@ -22,7 +26,7 @@ int main()
     
     while (1)
     {
-        printf("1) Edit Menu \n2) Add item \n3) Order completed \n4) Exit \n");
+        printf("1) Edit Menu \n2) Add item \n3) Order completed \n4) Display Queue \n5) Exit \n");
         printf ("Your selection : ");
         scanf("%d", &s);
 
@@ -39,19 +43,23 @@ int main()
                     do
                     {
                         scanf("%d", &item);
-                        //add function
+                        add_queue(queue, item);
                         addtally(item);
                         i++;
                         printf("Added! \n");
+
                     }while (i<n);
 
+                    printf("\n");
                     break;
 
-            case 3:
-            		delete_queue(queue);
-            		break;
+            case 3: delete_queue(queue);
+                    break;
 
-            case 4: addtotal();  
+            case 4: display_queue(queue);
+                    break;
+
+            case 5: addtotal();  
                     return 0;              
         }
     }
@@ -89,10 +97,10 @@ void makedb()  // Function to make a MENU and then make a 2D array from the menu
     while(!feof(f))
     {
       int num,price;
-      char x[20];  
       fscanf(f,"%d %s %d\n",&num,x,&price);
       a[i][0] = num;
       a[i][1] = price;
+      strcpy(dishes[i],x);
       i++;
     }
 
@@ -102,7 +110,6 @@ void makedb()  // Function to make a MENU and then make a 2D array from the menu
 void addtally(int item)  // Searches the item which is ordered using fibonacci search algorithm and adds its corresponding price to the tally
 {
     total+=a[item-1][1];
-    printf("%d",total);
 }
 
 void display_menu()
@@ -144,18 +151,49 @@ void addtotal()  // function to add the total of the day to a file
     printf("Today's tally was successfully saved to database\n");
 }
 
+void add_queue(int *queue, int item)
+{
+    *(queue + pend) = item;
+    pend++;
+}
+
+void display_queue(int *queue)
+{
+    printf ("\nCurrent Queue : \n");
+    for (int i = 0; i <pend; i++)
+    {
+        printf("%s\n", dishes[*queue - 1]);
+        queue++;
+    }
+    printf("\n");
+}
 
 void delete_queue(int *start)
 {
 	int temp;
 	pend--;
-	if(pend==1){
-		*(start+pend)=0;
-	}
-	else{
-		for(int i=0;i<pend;i++){
-			*(start+i)=*(start+i+1);
-		}
-		*(start+pend)=0;
-	}
+    if (pend >= 0)
+    {
+        if(pend==0)
+        {
+            *(start+pend)=0;
+        }
+
+        else
+        {
+            for(int i=0;i<pend;i++)
+            {
+                *(start+i)=*(start+i+1);
+            }
+            *(start+pend)=0;
+        }
+        printf("\nOrder Completed \n\n");
+    }
+
+    else 
+    {
+        pend = 0;
+        printf ("No pending items to be deleted \n");
+    }       
+
 }
